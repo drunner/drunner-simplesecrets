@@ -1,0 +1,5 @@
+#!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. "$DIR/bash.conf"
+
+docker build -t "${CONTAINER_NAME}" "$DIR/../"

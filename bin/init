@@ -1,0 +1,27 @@
+#!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. "$DIR/bash.conf"
+
+RVAL=3
+
+function ensurevolexists {
+  docker volume ls | grep "$1" > /dev/null
+  if [ $? -ne 0 ] ; then
+     echo Creating volume "$1"
+     docker volume create --name "$1"
+     RVAL=0
+  fi
+}
+
+ensurevolexists "${VOLUME_NAME}"
+
+# # populate the config directory with defaults
+# docker run -it --name ansibleconfig -v "${VOLUME_NAME}":/config \
+#        "${CONTAINER_NAME}" /bin/bash /usr/local/bin/initconfig.sh
+# docker rm ansibleconfig > /dev/null
+
+if [ "$RVAL" = 3 ]; then
+   echo "All volumes already initialised."
+fi
+
+exit $RVAL
