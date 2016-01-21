@@ -36,6 +36,7 @@ function makefile {
 
 docker run --name=simplesecrets -ti                           \
        -v "${VOLUME_VCMD}"                                    \
+       -e "S3KEY=\${S3KEY}" -e "S3SECRET=\${S3SECRET}" -e "BUCKET=\${BUCKET}" \
        ${CONTAINER_NAME} /usr/local/bin/$1 \$@
 docker rm simplesecrets  > /dev/null
 EOF
