@@ -28,4 +28,4 @@ Thgen use the ssdownload script with no dependencies or config to grab secrets b
 ```
 PASS=password123 ; ssdownload -b BUCKET HASH > myfile
 ```
-(available here: ...)
+ssdownload is available here: https://raw.github.com/j842/scripts/master/ssdownload
