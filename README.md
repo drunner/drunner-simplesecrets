@@ -9,7 +9,7 @@ bin/install
 
 Then
 ```
-S3KEY=abcde S3SECRET=1234 BUCKET=mybucket ; simplesecrets-config
+S3KEY=abcde S3SECRET=1234 BUCKET=mybucket simplesecrets-config
 PASS=password123 ; cat myfile | simplesecrets 
 ```
 

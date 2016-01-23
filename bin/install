@@ -34,9 +34,9 @@ function makefile {
     cat <<EOF | tr -s ' ' >/usr/local/bin/$1 
 #!/bin/bash
 
-docker run --name=simplesecrets -ti                           \
+docker run --name=simplesecrets -i                           \
        -v "${VOLUME_VCMD}"                                    \
-       -e "S3KEY=\${S3KEY}" -e "S3SECRET=\${S3SECRET}" -e "BUCKET=\${BUCKET}" \
+       -e "S3KEY=\${S3KEY}" -e "S3SECRET=\${S3SECRET}" -e "BUCKET=\${BUCKET}" -e "PASS=\${PASS}" \
        ${CONTAINER_NAME} /usr/local/bin/$1 \$@
 docker rm simplesecrets  > /dev/null
 EOF
@@ -55,10 +55,10 @@ for CMD in "${COMMANDS[@]}"; do
 done
 
 # get the latest docker image, set RVAL if changed.
-echo "Checking we have latest ${CONTAINER_NAME} image..."
-if [ $(docker pull ${CONTAINER_NAME} | grep -c "Image is up to date") -eq 0 ]; then
-  RVAL=0
-fi
+# echo "Checking we have latest ${CONTAINER_NAME} image..."
+# if [ $(docker pull ${CONTAINER_NAME} | grep -c "Image is up to date") -eq 0 ]; then
+#   RVAL=0
+# fi
 
 #------------------------
 
