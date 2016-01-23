@@ -21,7 +21,7 @@ S3KEY=abcde S3SECRET=1234 BUCKET=mybucket simplesecrets-config
 
 Now you can store secrets, e.g.:
 ```
-PASS=password123 simplesecrets < myfile 
+PASS=password123 simplesecrets [name] < myfile 
 ```
 
 Then use the ssdownload script with no dependencies or config to grab secrets back, e.g.
