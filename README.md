@@ -24,8 +24,8 @@ Now you can store secrets, e.g.:
 PASS=password123 simplesecrets < myfile 
 ```
 
-Thgen use the ssdownload script with no dependencies or config to grab secrets back, e.g.
+Then use the ssdownload script with no dependencies or config to grab secrets back, e.g.
 ```
-PASS=password123 ; ssdownload -b BUCKET HASH > myfile
+PASS=password123 ; ssdownload BUCKET HASH > myfile
 ```
 ssdownload is available here: https://raw.github.com/j842/scripts/master/ssdownload
