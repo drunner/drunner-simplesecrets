@@ -23,9 +23,12 @@ Now you can store secrets, e.g.:
 ```
 PASS=password123 simplesecrets [NAME] < myfile 
 ```
+If the environment variable PASS is set it will use that, otherwise generate a random
+passphrase.
 
-Then use the ssdownload script with no dependencies or config to grab secrets back, e.g.
+Then use the ssdownload script as shown in the output of simplesecrets:
 ```
 PASS=password123 ; ssdownload BUCKET HASH [NAME] > myfile
 ```
-ssdownload is available here: https://raw.github.com/j842/scripts/master/ssdownload
+PASS is required for ssdownload, which is available from [GitHub](https://raw.github.com/j842/scripts/master/ssdownload)
+It can be installed and used without this Docker container.
