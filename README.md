@@ -25,24 +25,24 @@ S3KEY=abcde S3SECRET=1234 BUCKET=mybucket simplesecrets-config
 ## Storing Secrets
 
 ### Simple Method
-Now you can store secrets, e.g. if you don't care about the NAME or PASSWORD:
+Now you can store secrets. If you don't care about the name or password:
 ```
 simplesecrets < myfile 
 ```
 This will automatically generate a password, and the secret will be stored by its MD5.
 
 ### Updatable Secrets
-To allow future updating of the secret, or NAME/PASSWORDS you prefer:
+To allow future updating of the secret, or to choose the name and password:
 ```
-PASS=[PASSWORD] simplesecrets NAME < myfile 
+PASS=password123 simplesecrets myname < myfile 
 ```
-You can use this from the first upload, specifying NAME and PASSWORD of your choice,
-or re-use the automatically generated ones to update something entered with the simple
-method in the previous section.
-Updating like this means there are no changes on the clients.
+You can use this from the first upload to choose a nice name and password. 
+You can also re-use the automatically generated ones to update something entered with 
+the simple method in the previous section.
+Updating like this means clients will get the latest secret without any code/config changes.
 
-You can also invalidate the old password by using the same NAME but a new PASSWORD. 
-It will overwrite the old file.
+You can also invalidate the old password by using the same name but a new password.
+It will overwrite the old encrypted file.
 
 ### Retrieving Secrets
 Retrieve using the ssdownload script as shown in the output of simplesecrets.
