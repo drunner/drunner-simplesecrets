@@ -48,3 +48,10 @@ It will overwrite the old encrypted file.
 Retrieve using the ssdownload script as shown in the output of simplesecrets.
 ssdownload is available from [GitHub](https://raw.github.com/j842/scripts/master/ssdownload).
 It can be installed and used without this Docker container.
+
+Examples:
+```
+PASS=password123 ssdownload BUCKET NAME > myfile
+PASS=password123 ssdownload BUCKET NAME OUTPUTFILE
+```
+If OUTPUTFILE is specified then the exit code is 3 if the file is unchanged (suitable for Ansible use).
