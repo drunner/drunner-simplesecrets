@@ -46,7 +46,7 @@ It will overwrite the old encrypted file.
 
 ### Retrieving Secrets
 Retrieve using the [ssdownload script](https://raw.github.com/j842/scripts/master/ssdownload) from GitHub
-as shown in the output of simplesecrets.
+using the arguments shown in the output of simplesecrets.
 ssdownload can be installed and used without this Docker container.
 
 Examples:
