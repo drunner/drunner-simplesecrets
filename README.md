@@ -45,9 +45,9 @@ You can also invalidate the old password by using the same name but a new passwo
 It will overwrite the old encrypted file.
 
 ### Retrieving Secrets
-Retrieve using the ssdownload script as shown in the output of simplesecrets.
-ssdownload is available from [GitHub](https://raw.github.com/j842/scripts/master/ssdownload).
-It can be installed and used without this Docker container.
+Retrieve using the [ssdownload script](https://raw.github.com/j842/scripts/master/ssdownload) from GitHub
+as shown in the output of simplesecrets.
+ssdownload can be installed and used without this Docker container.
 
 Examples:
 ```
