@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# hostinit
+#
+# This file is run on the host, and can be used to do things like
+# set up docker volumes (e.g. docker volume create dr-helloworld-configvol )
+#
+#
+
+SERVICENAME="$1"
+CONTAINERNAME="$2"
+
+
+function ensurevolexists {
+  docker volume ls | grep "$1" > /dev/null
+  if [ $? -ne 0 ] ; then
+     echo Creating volume "$1"
+     docker volume create --name "$1"
+     RVAL=0
+  fi
+}
+
+RVAL=3
+ensurevolexists "simplesecrets-${SERVICENAME}-config"
+exit RVAL

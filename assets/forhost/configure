@@ -1,0 +1,16 @@
+#!/bin/bash
+
+SERVICENAME="$1"
+CONTAINERNAME="$2"
+shift 2
+
+# This script is run on the host.
+# It launches the docker container and runs our hello world command.
+
+VOLUME_VCMD="simplesecrets-${SERVICENAME}-config:/config"
+               
+docker run --name=simplesecrets-config -i -v "${VOLUME_VCMD}" \
+       -e "S3KEY=\${S3KEY}" -e "S3SECRET=\${S3SECRET}" -e "BUCKET=\${BUCKET}" \
+       ${CONTAINER_NAME} /usr/local/bin/simplesecrets-config $@
+ 
+ docker rm simplesecrets-config 

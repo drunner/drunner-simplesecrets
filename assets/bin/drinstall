@@ -1,0 +1,14 @@
+#!/bin/bash
+
+SERVICENAME="$1"
+CONTAINERNAME="$2"
+
+# This script is run inside the container, not on the host.
+# dr mounts the service directory on the host to /dr
+# We need to copy scripts etc into there.
+
+# help file for dr
+echo "store low security secrets in S3" > /dr/txt/shorthelp.txt
+
+# scripts that dr can run
+cp -a /opt/forhost/* /dr/bin/
