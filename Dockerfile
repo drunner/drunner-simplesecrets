@@ -1,16 +1,11 @@
 # Ansible in a Docker container, accessed via ssh.
 
-FROM alpine
+FROM j842/dr-baseimage-alpine
 MAINTAINER j842
 
-# we use non-root user in the container for security.
-# dr expects uid 22022 and gid 22022.
-RUN apk add --update bash curl wget && rm -rf /var/cache/apk/*
-RUN addgroup -S -g 22022 drgroup
-RUN adduser -S -u 22022 -G drgroup -g '' druser
-
-# create the mount point and allow druser to write to it.
-RUN mkdir /dr && chown druser:drgroup /dr
+# Sadly this doesn't work with pure volume containers yet. Cmon Docker, sort it!
+# Need to work around by first mounting the container for now (done in hostinit).
+RUN mkdir /config && chown druser:drgroup /config
 
 ENV DownloadDate 2016-01-23-859
 RUN wget --no-cache -nv -O /usr/local/bin/ssdownload https://raw.github.com/j842/scripts/master/ssdownload
