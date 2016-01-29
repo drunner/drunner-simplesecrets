@@ -1,14 +1,15 @@
 # Docker-Simplesecrets
 Docker repo to manage a simple secret service on S3. Not needed for secret download/retrieval.
 
-## Installation
-To initialise and install:
+## Use with dr
+
+### Install
+
 ```
-bin/init
-bin/install
+dr install j842/simplesecrets SERVICENAME
 ```
 
-## Configuration 
+### Configuration 
 
 After the base installation, 
 * create an S3 Bucket, 
@@ -19,22 +20,22 @@ After the base installation,
 
 Then configure with the IAM user's key and secret and the name of the bucket:
 ```
-S3KEY=abcde S3SECRET=1234 BUCKET=mybucket simplesecrets-config
+S3KEY=abcde S3SECRET=1234 BUCKET=mybucket dr SERVICENAME configure
 ```
 
-## Storing Secrets
+### Storing Secrets
 
-### Simple Method
+#### Simple Method
 Now you can store secrets. If you don't care about the name or password:
 ```
-simplesecrets < myfile 
+dr SERVICENAME store < myfile 
 ```
 This will automatically generate a password, and the secret will be stored by its MD5.
 
-### Updatable Secrets
+#### Updatable Secrets
 To allow future updating of the secret, or to choose the name and password:
 ```
-PASS=password123 simplesecrets myname < myfile 
+PASS=password123 dr SERCICENAME store myname < myfile 
 ```
 You can use this from the first upload to choose a nice name and password. 
 You can also re-use the automatically generated ones to update something entered with 
@@ -44,7 +45,33 @@ Updating like this means clients will get the latest secret without any code/con
 You can also invalidate the old password by using the same name but a new password.
 It will overwrite the old encrypted file.
 
-### Retrieving Secrets
+#### Retrieving Secrets
 Retrieve using the ssdownload script as shown in the output of simplesecrets.
 ssdownload is available from [GitHub](https://raw.github.com/j842/scripts/master/ssdownload).
 It can be installed and used without this Docker container.
+
+
+## Use without dr
+
+### Installation
+
+Create a data volume to store the configuration, e.g.
+```
+docker volume create --name simplesecrets-config
+```
+
+Configure it
+```
+S3KEY=abcde S3SECRET=1234 BUCKET=mybucket docker run --name=simplesecrets -i -v simplesecrets-config:/config \
+       -e "S3KEY=\${S3KEY}" -e "S3SECRET=\${S3SECRET}" -e "BUCKET=\${BUCKET}" \
+       j842/simplesecrets simplesecrets-config
+docker rm simplesecrets
+```
+
+### Running
+
+```
+PASS=password docker run --name=simplesecrets -i -v simplesecrets-config:/config -e "PASS=\${PASS}" \
+       j842/simplesecrets simplesecrets secretname
+docker rm simplesecrets
+```
