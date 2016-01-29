@@ -22,4 +22,4 @@ function ensurevolexists {
 
 RVAL=3
 ensurevolexists "simplesecrets-${SERVICENAME}-config"
-exit RVAL
+exit "$RVAL"
