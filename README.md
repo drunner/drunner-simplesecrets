@@ -85,6 +85,6 @@ docker rm simplesecrets
 
 ```
 PASS=password docker run --name=simplesecrets -i -v simplesecrets-config:/config -e "PASS=\${PASS}" \
-       j842/simplesecrets simplesecrets secretname
+       j842/simplesecrets simplesecrets secretname < myfile
 docker rm simplesecrets
 ```
