@@ -65,7 +65,7 @@ PASS=password123 ssdownload BUCKET NAME OUTPUTFILE
 If OUTPUTFILE is specified then the exit code is 3 if the file is unchanged (suitable for Ansible use).
 
 
-## Use without dr
+## Use without Docker Runner
 
 ### Installation
 
