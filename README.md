@@ -7,7 +7,7 @@ authentication via a [simple bash script](https://raw.github.com/j842/scripts/ma
 Because the encrypted file is publicly available, security relies completely on the encryption, 
 which uses GPG and the CAST5 cipher. Use a strong passphrase or let SimpleSecrets generate one for you.
 
-## Use with dr
+## Use with [Docker Runner](https://github.com/j842/dr)
 
 ### Install
 
