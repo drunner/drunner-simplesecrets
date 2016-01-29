@@ -14,6 +14,7 @@ which uses GPG and the CAST5 cipher. Use a strong passphrase or let SimpleSecret
 ```
 dr install j842/simplesecrets SERVICENAME
 ```
+SERVICENAME can be anything you like.
 
 ### Configuration 
 
