@@ -45,10 +45,17 @@ Updating like this means clients will get the latest secret without any code/con
 You can also invalidate the old password by using the same name but a new password.
 It will overwrite the old encrypted file.
 
-#### Retrieving Secrets
-Retrieve using the ssdownload script as shown in the output of simplesecrets.
-ssdownload is available from [GitHub](https://raw.github.com/j842/scripts/master/ssdownload).
-It can be installed and used without this Docker container.
+### Retrieving Secrets
+Retrieve using the [ssdownload script](https://raw.github.com/j842/scripts/master/ssdownload) from GitHub
+using the arguments shown in the output of simplesecrets.
+ssdownload can be installed and used without this Docker container.
+
+Examples:
+```
+PASS=password123 ssdownload BUCKET NAME > myfile
+PASS=password123 ssdownload BUCKET NAME OUTPUTFILE
+```
+If OUTPUTFILE is specified then the exit code is 3 if the file is unchanged (suitable for Ansible use).
 
 
 ## Use without dr
