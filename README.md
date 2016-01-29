@@ -1,11 +1,11 @@
-# Docker-Simplesecrets
+# Docker-SimpleSecrets
 Docker repo to manage a simple secret service on S3. Docker is not needed for secret download/retrieval.
 
 Intended primarily for bootstrapping before Crypt, Consul, Keywhiz or similar is installed.
-SimpleSecret allows you to store encrypted secrets in S3. They can be retrieved without
+SimpleSecrets allows you to store encrypted secrets in S3. They can be retrieved without
 authentication via a [simple bash script](https://raw.github.com/j842/scripts/master/ssdownload).
 Because the encrypted file is publicly available, security relies completely on the encryption, 
-which uses GPG and the CAST5 cipher. Use a strong passphrase or let simplesecrets generate one for you.
+which uses GPG and the CAST5 cipher. Use a strong passphrase or let SimpleSecrets generate one for you.
 
 ## Use with dr
 
