@@ -15,7 +15,7 @@ RUN chmod a+x /usr/local/bin/ssdownload
 ADD ["./usrlocalbin","/usr/local/bin/"]
 ADD ["./dr","/dr"]
 RUN chown druser:drgroup /usr/local/bin/*
-RUN chown druser:drgroup /opt/forhost/*
+RUN chown -R druser:drgroup /dr
 
 # lock in druser.
 USER druser
