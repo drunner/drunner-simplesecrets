@@ -14,7 +14,7 @@ which uses GPG and the CAST5 cipher. Use a strong passphrase or let SimpleSecret
 ```
 dr install j842/simplesecrets SERVICENAME
 ```
-SERVICENAME can be anything you like.
+SERVICENAME can be anything you like. We'll assume it's ssecrets in the following.
 
 ### Configuration 
 
@@ -27,7 +27,7 @@ After the base installation,
 
 Then configure with the IAM user's key and secret and the name of the bucket:
 ```
-S3KEY=abcde S3SECRET=1234 BUCKET=mybucket dr SERVICENAME configure
+S3KEY=abcde S3SECRET=1234 BUCKET=mybucket ssecrets configure
 ```
 
 ### Storing Secrets
@@ -35,14 +35,14 @@ S3KEY=abcde S3SECRET=1234 BUCKET=mybucket dr SERVICENAME configure
 #### Simple Method
 Now you can store secrets. If you don't care about the name or password:
 ```
-dr SERVICENAME store < myfile 
+ssecrets store < myfile 
 ```
 This will automatically generate a password, and the secret will be stored by its MD5.
 
 #### Updatable Secrets
 To allow future updating of the secret, or to choose the name and password:
 ```
-PASS=password123 dr SERCICENAME store myname < myfile 
+PASS=password123 ssecrets store myname < myfile 
 ```
 You can use this from the first upload to choose a nice name and password. 
 You can also re-use the automatically generated ones to update something entered with 
@@ -64,10 +64,9 @@ PASS=password123 ssdownload BUCKET NAME OUTPUTFILE
 ```
 If OUTPUTFILE is specified then the exit code is 3 if the file is unchanged (suitable for Ansible use).
 
-
 ## Use without Docker Runner
 
-### Installation
+Docker Runner makes managing services easy. Simplesecrets works fine without dr though.
 
 Create a data volume to store the configuration, e.g.
 ```
@@ -82,10 +81,12 @@ S3KEY=abcde S3SECRET=1234 BUCKET=mybucket docker run --name=simplesecrets -i -v 
 docker rm simplesecrets
 ```
 
-### Running
+Then you can add secrets:
 
 ```
 PASS=password docker run --name=simplesecrets -i -v simplesecrets-config:/config -e "PASS=\${PASS}" \
        j842/simplesecrets simplesecrets secretname < myfile
 docker rm simplesecrets
 ```
+
+(Can't use --rm as the pure volume container would be destroyed).
