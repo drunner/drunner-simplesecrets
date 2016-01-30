@@ -4,6 +4,28 @@ SERVICENAME="$1"
 IMAGENAME="$2"
 shift 2
 
+function showusage {
+cat <<EOF
+
+NAME
+   ${SERVICENAME} configure - configure simplesecrets for secret upload
+   
+SYNOPSIS
+   S3KEY=abcde S3SECRET=1234 BUCKET=mybucket ${SERVICENAME} configure
+
+DESCRIPTION
+   Stores the S3 key, secret and bucket passed via environment variables into a volume container.
+   Required for simplesecrets to be able to upload files.
+
+RETURN VALUE
+   0   - success
+   1   - error
+   3   - no change
+   
+EOF
+   exit 1  
+}
+
 # This script is run on the host.
 # It launches the docker container and runs our hello world command.
 

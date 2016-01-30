@@ -39,7 +39,7 @@ if [ $# -gt 1 ]; then showusage; fi
 
 VOLUME_VCMD="dr-${SERVICENAME}-config:/config"
                
-docker run --name=simplesecrets -i -v "${VOLUME_VCMD}" -e "PASS=\${PASS}" \
+docker run --name=simplesecrets -i -v "${VOLUME_VCMD}" -e "PASS=${PASS}" \
        ${IMAGENAME} store "$@"
  
 docker rm simplesecrets >/dev/null
