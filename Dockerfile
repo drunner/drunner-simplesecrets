@@ -7,15 +7,14 @@ MAINTAINER j842
 # Need to work around by first mounting the container for now (done in hostinit).
 RUN mkdir /config && chown druser:drgroup /config
 
-ENV DownloadDate 2016-01-23-859
+ENV DownloadDate 2016-01-30-2042
 RUN wget --no-cache -nv -O /usr/local/bin/ssdownload https://raw.github.com/j842/scripts/master/ssdownload
 RUN chmod a+x /usr/local/bin/ssdownload
 
 # add in the assets.
 ADD ["./usrlocalbin","/usr/local/bin/"]
 ADD ["./dr","/dr"]
-RUN chown druser:drgroup /usr/local/bin/*
-RUN chown -R druser:drgroup /dr
+RUN chown druser:drgroup /usr/local/bin/*  &&  chown -R druser:drgroup /dr
 
 # lock in druser.
 USER druser

@@ -1,14 +1,14 @@
 #!/bin/bash
-# Usage: S3KEY=abcde S3SECRET=1234 BUCKET=mybucket ; simplesecrets-config
+# Usage: S3KEY=abcde S3SECRET=1234 BUCKET=mybucket configure
 
 function showusage {
 cat <<EOF
 
 NAME
-   simplesecrets-config - configure simplesecrets for secret upload
+   configure - configure simplesecrets for secret upload
    
 SYNOPSIS
-   S3KEY=abcde S3SECRET=1234 BUCKET=mybucket simplesecrets-config
+   S3KEY=abcde S3SECRET=1234 BUCKET=mybucket configure
 
 DESCRIPTION
    Installs the S3 key, secret and bucket passed via environment variables into a volume container.

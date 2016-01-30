@@ -77,7 +77,7 @@ Configure it
 ```
 S3KEY=abcde S3SECRET=1234 BUCKET=mybucket docker run --name=simplesecrets -i -v simplesecrets-config:/config \
        -e "S3KEY=\${S3KEY}" -e "S3SECRET=\${S3SECRET}" -e "BUCKET=\${BUCKET}" \
-       j842/simplesecrets simplesecrets-config
+       j842/simplesecrets configure
 docker rm simplesecrets
 ```
 
@@ -85,7 +85,7 @@ Then you can add secrets:
 
 ```
 PASS=password docker run --name=simplesecrets -i -v simplesecrets-config:/config -e "PASS=\${PASS}" \
-       j842/simplesecrets simplesecrets secretname < myfile
+       j842/simplesecrets store secretname < myfile
 docker rm simplesecrets
 ```
 

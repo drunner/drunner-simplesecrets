@@ -7,7 +7,7 @@ function command_exists { command -v "$1" >/dev/null 2>&1 ; }
 function setmd5 { MD5=$(md5sum "${1}") ; MD5="${MD5%% *}" ; }
 
 if [ ! -e /config/s3 ]; then
-  echo "Must call simplesecrets-config first."
+  echo "Store requires simplesecrets to have been configured first. Please call configure."
   exit 1
 fi
 . /config/s3
@@ -16,11 +16,11 @@ function showusage {
 cat <<EOF
 
 NAME
-   simplesecrets - upload to simple secrets to S3
+   store - upload to simple secrets to S3
    
 SYNOPSIS
-   simplesecrets < myfile 
-   PASS=PASSWORD simplesecrets NAME < myfile
+   store < myfile 
+   PASS=PASSWORD store NAME < myfile
 
 DESCRIPTION
    Uploads the encrypted file (or data) to the configured S3 bucket in /simplesecrets.
@@ -98,7 +98,7 @@ NAME="${MD5}"
 if [ ! -z "$1" ]; then NAME="$1" ; fi
 echo "Using name: $NAME"
  
-mkdir /root/.gnupg ; touch /root/.gnupg/gpg.conf
+mkdir "/${HOME}/.gnupg" ; touch "/${HOME}/.gnupg/gpg.conf"
 
 # Encrypt. 
 dogpg "${BASEFILE}" "$PASS"

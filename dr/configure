@@ -7,10 +7,14 @@ shift 2
 # This script is run on the host.
 # It launches the docker container and runs our hello world command.
 
+if [ -z "${S3KEY}" ]; then echo "Missing S3KEY." ; showusage ; fi
+if [ -z "${S3SECRET}" ]; then echo "Missing S3SECRET." ; showusage ; fi
+if [ -z "${BUCKET}" ]; then echo "Missing BUCKET." ; showusage ; fi
+
 VOLUME_VCMD="dr-${SERVICENAME}-config:/config"
                
-docker run --name=simplesecrets-config -i -v "${VOLUME_VCMD}" \
-       -e "S3KEY=\${S3KEY}" -e "S3SECRET=\${S3SECRET}" -e "BUCKET=\${BUCKET}" \
-       ${IMAGENAME} /usr/local/bin/simplesecrets-config "$@"
+docker run --name=simplesecrets-configure -i -v "${VOLUME_VCMD}" \
+       -e "S3KEY=${S3KEY}" -e "S3SECRET=${S3SECRET}" -e "BUCKET=${BUCKET}" \
+       ${IMAGENAME} configure "$@"
  
-docker rm simplesecrets-config >/dev/null
+docker rm simplesecrets-configure >/dev/null
