@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# restore
+#
+# This file is run on the host, and restores any configuration or data
+# that is outside /dr/config from the backup in RESTOREPATH.
+#
+
+SERVICENAME="$1"
+IMAGENAME="$2"
+RESTOREPATH="$3"
+
+echo "Not yet implemented!" >&2
+exit 1

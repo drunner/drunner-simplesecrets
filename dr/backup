@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# backup
+#
+# This file is run on the host, and backs up any configuration
+# or data stored outside /dr/config
+# Backups need to be stored in BACKUPPATH. We can use whatever
+# format we want for the files, we restore them in the restore
+# script.
+#
+
+SERVICENAME="$1"
+IMAGENAME="$2"
+BACKUPPATH="$3"
+
+echo "Not yet implemented!" >&2
+exit 1

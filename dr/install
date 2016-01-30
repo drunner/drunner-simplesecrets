@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# install
+#
+# This file is run on the host, and can be used to do things like
+# set up docker volumes (e.g. docker volume create dr-helloworld-datavol )
+#
+#
+
+SERVICENAME="$1"
+IMAGENAME="$2"
+
+# nothing to do, we just use the default config volume.

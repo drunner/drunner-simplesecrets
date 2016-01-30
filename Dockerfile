@@ -12,10 +12,14 @@ RUN wget --no-cache -nv -O /usr/local/bin/ssdownload https://raw.github.com/j842
 RUN chmod a+x /usr/local/bin/ssdownload
 
 # add in the assets.
-ADD ["./assets/bin","/usr/local/bin/"]
-ADD ["./assets/forhost","/opt/forhost"]
+ADD ["./usrlocalbin","/usr/local/bin/"]
+ADD ["./dr","/dr"]
 RUN chown druser:drgroup /usr/local/bin/*
 RUN chown druser:drgroup /opt/forhost/*
 
-VOLUME ["/config","/dr"]
+# lock in druser.
 USER druser
+
+# expose volume
+VOLUME ["/config"]
+

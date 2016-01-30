@@ -1,0 +1,16 @@
+#!/bin/bash
+
+SERVICENAME="$1"
+IMAGENAME="$2"
+shift 2
+
+# This script is run on the host.
+# It launches the docker container and runs our hello world command.
+
+VOLUME_VCMD="dr-${SERVICENAME}-config:/config"
+               
+docker run --name=simplesecrets -i -v "${VOLUME_VCMD}" -e "PASS=\${PASS}" \
+       ${IMAGENAME} /usr/local/bin/simplesecrets "$@"
+ 
+docker rm simplesecrets >/dev/null
+ 

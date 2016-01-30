@@ -7,12 +7,12 @@ CONTAINERNAME="$2"
 cat <<EOF >&2
    
 NAME
-   dr ${SERVICENAME} - store low security secrets in AWS S3.
+   ${SERVICENAME} - store low security secrets in AWS S3.
    
 SYNOPSIS
    S3KEY=? S3SECRET=? BUCKET=? dr ${SERVICENAME} configure - Set up the S3 bucket.
-   dr ${SERVICENAME} store < MYFILE                        - Store a secret.
-   PASS=? dr ${SERVICENAME} store MYNAME < MYFILE          - Store named secret.
+   ${SERVICENAME} store < MYFILE                           - Store a secret.
+   PASS=? ${SERVICENAME} store MYNAME < MYFILE             - Store named secret.
    
 DESCRIPTION
    See https://github.com/j842/docker-simplesecrets
