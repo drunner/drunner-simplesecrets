@@ -13,5 +13,7 @@ SERVICENAME="$1"
 IMAGENAME="$2"
 BACKUPPATH="$3"
 
-echo "Not yet implemented!" >&2
-exit 1
+# Nothing to do, our configuration is handled by Docker Runner
+# since it's in the standard /config folder.
+
+echo "SimpleSecrets restore process was successful." > "$BACKUPPATH/note.txt"

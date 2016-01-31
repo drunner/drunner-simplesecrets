@@ -10,5 +10,6 @@ SERVICENAME="$1"
 IMAGENAME="$2"
 RESTOREPATH="$3"
 
-echo "Not yet implemented!" >&2
-exit 1
+# Nothing to do. 
+
+cat "$RESTOREPATH/note.txt" >&2
