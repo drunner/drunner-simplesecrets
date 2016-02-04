@@ -1,14 +1,12 @@
 #!/bin/bash
+source "$( dirname "$(readlink -f "$0")" )/_variables"
 
 # hostdestroy
 #
 # This file is run on the host, and can be used to do things like
 # destroy docker volumes (e.g. docker volume rm dr-helloworld-datavol )
 #
-#
 
-SERVICENAME="$1"
-IMAGENAME="$2"
 
 # nothing to do here.
 

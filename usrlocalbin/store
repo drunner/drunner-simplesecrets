@@ -1,8 +1,6 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-SERVICENAME="$1"
-
 function command_exists { command -v "$1" >/dev/null 2>&1 ; }
 function setmd5 { MD5=$(md5sum "${1}") ; MD5="${MD5%% *}" ; }
 
@@ -10,7 +8,7 @@ if [ ! -e /config/s3 ]; then
   echo "Store requires simplesecrets to have been configured first. Please call configure."
   exit 1
 fi
-. /config/s3
+source /config/s3
 
 function showusage {
 cat <<EOF

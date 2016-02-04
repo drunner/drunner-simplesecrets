@@ -1,8 +1,6 @@
 #!/bin/bash
+source "$( dirname "$(readlink -f "$0")" )/_variables"
 
-# Service name passed as argument by dr.
-SERVICENAME="$1"
-CONTAINERNAME="$2"
 
 cat <<EOF >&2
    
@@ -10,7 +8,7 @@ NAME
    ${SERVICENAME} - store low security secrets in AWS S3.
    
 SYNOPSIS
-   S3KEY=? S3SECRET=? BUCKET=? dr ${SERVICENAME} configure - Set up the S3 bucket.
+   S3KEY=? S3SECRET=? BUCKET=? ${SERVICENAME} configure    - Set up the S3 bucket.
    ${SERVICENAME} store < MYFILE                           - Store a secret.
    PASS=? ${SERVICENAME} store MYNAME < MYFILE             - Store named secret.
    

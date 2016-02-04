@@ -1,4 +1,6 @@
 #!/bin/bash
+source "$( dirname "$(readlink -f "$0")" )/_variables"
+
 
 # install
 #
@@ -6,8 +8,5 @@
 # set up docker volumes (e.g. docker volume create dr-helloworld-datavol )
 #
 #
-
-SERVICENAME="$1"
-IMAGENAME="$2"
 
 # nothing to do, we just use the default config volume.
