@@ -33,7 +33,7 @@ EOF
 # This script is run on the host.
 # It launches the docker container and runs our hello world command.
 
-if [ $# -gt 1 ]; then showusage; fi
+if [ $# -gt 1 ]; then echo "Expected up to one argument. Got ${#} - $@" ; showusage; fi
                
 docker run --name=simplesecrets -i ${DOCKEROPTS[@]} -e "PASS=${PASS}" \
        ${IMAGENAME} store "$@"
