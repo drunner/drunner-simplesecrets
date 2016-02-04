@@ -16,21 +16,14 @@
 
 set -o nounset
 MYDIR=$( dirname "$(readlink -f "$0")" )
-source "$MYDIR/_variables"
+source "$MYDIR/variables.sh"
+source "$MYDIR/utils.sh"
 e=$(printf "\e") 
 readonly CODE_S="$e[32m"
 readonly CODE_E="$e[0m"
 
 #------------------------------------------------------------------------------------
-# die MSG - show the message (red) and exit 1.
-
-function die { 
-   echo " ">&2 ; echo -e "\e[31m\e[1m${1}\e[0m">&2  ; echo " ">&2
-   exit 1 
-}
-
-#------------------------------------------------------------------------------------
-# showhelp - give some info about the service. SERVICENAME and IMAGENAME are provided by _variables.
+# showhelp - give some info about the service. SERVICENAME and IMAGENAME are provided by variables.sh.
 
 function showhelp {
 cat <<EOF >&2
@@ -78,10 +71,14 @@ function main {
          destroy)
             ;;
                      
-         backup)
+         backupstart)
             BACKUPPATH="$1"
             ;;
          
+         backupend)
+            BACKUPPATH="$1"
+            ;;
+
          restore)
             RESTOREPATH="$1"
             ;;
@@ -94,7 +91,13 @@ function main {
             dockerrun /bin/bash "$@"
             ;;
          
-         update)
+         updatestart)
+            ;;
+
+         updateend)
+            ;;
+         
+         selftest)
             ;;
 
          configure)
