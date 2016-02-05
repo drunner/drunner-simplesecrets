@@ -5,6 +5,6 @@ source "$( dirname "$(readlink -f "$0")" )/_variables"
 # It launches the docker container and runs our hello world command.
 
 docker run -i -t --name="${SERVICENAME}-enter" -h "${HOSTNAME}" ${DOCKEROPTS[@]} \
-               ${IMAGENAME} /bin/bash
+               ${IMAGENAME} /bin/bash "$@"
 
 docker rm "${SERVICENAME}-enter" >/dev/null
