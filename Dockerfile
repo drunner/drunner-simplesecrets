@@ -1,6 +1,6 @@
 # Ansible in a Docker container, accessed via ssh.
 
-FROM j842/dr-baseimage-alpine
+FROM drunner/baseimage-alpine
 MAINTAINER j842
 
 ENV DownloadDate 2016-01-31-1737
@@ -9,8 +9,8 @@ RUN chmod a+x /usr/local/bin/ssdownload
 
 # add in the assets.
 ADD ["./usrlocalbin","/usr/local/bin/"]
-ADD ["./dr","/dr"]
-RUN chmod a+rx -R /usr/local/bin  &&  chmod a-w -R /dr
+ADD ["./drunner","/drunner"]
+RUN chmod a+rx -R /usr/local/bin  &&  chmod a-w -R /drunner
 
 # lock in druser.
 USER druser

@@ -1,0 +1,10 @@
+#!/bin/bash
+source "$( dirname "$(readlink -f "$0")" )/_variables"
+
+# update
+#
+# This file is run on the host, and can be used to do things like
+# stop services before an update.
+#
+#
+
