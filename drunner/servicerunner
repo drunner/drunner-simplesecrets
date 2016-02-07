@@ -102,7 +102,7 @@ function main {
             if [ -z "${S3SECRET}" ]; then showhelp ; die "Missing S3SECRET." ; fi
             if [ -z "${BUCKET}" ]; then showhelp ; die "Missing BUCKET." ; fi
 
-            docker run -i -t --name="${SERVICENAME}-${COMMAND}" -h "${HOSTNAME}" -e "S3KEY=${S3KEY}" -e "S3SECRET=${S3SECRET}" -e "BUCKET=${BUCKET}" "${DOCKEROPTS[@]}" "${IMAGENAME}" configure "$@"
+            docker run -it --name="${SERVICENAME}-${COMMAND}" -h "${HOSTNAME}" -e "S3KEY=${S3KEY}" -e "S3SECRET=${S3SECRET}" -e "BUCKET=${BUCKET}" "${DOCKEROPTS[@]}" "${IMAGENAME}" configure "$@"
             local RVAL=$?
             docker rm "${SERVICENAME}-${COMMAND}" >/dev/null
             if [ $RVAL -ne 0 ]; then die "${SERVICENAME} ${COMMAND} failed." ; fi
@@ -111,7 +111,7 @@ function main {
          store)
             if [ $# -gt 1 ]; then showhelp ; die "Expected only one argument." ; fi
                            
-            docker run -i -t --name="${SERVICENAME}-${COMMAND}" -h "${HOSTNAME}" -e "PASS=${PASS}" "${DOCKEROPTS[@]}" "${IMAGENAME}" store "$@"
+            docker run -i --name="${SERVICENAME}-${COMMAND}" -h "${HOSTNAME}" -e "PASS=${PASS:-""}" "${DOCKEROPTS[@]}" "${IMAGENAME}" store "$@"
             local RVAL=$?
             docker rm "${SERVICENAME}-${COMMAND}" >/dev/null
             if [ $RVAL -ne 0 ]; then die "${SERVICENAME} ${COMMAND} failed." ; fi
