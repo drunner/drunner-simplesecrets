@@ -33,8 +33,8 @@ NAME
    
 SYNOPSIS
    ${CODE_S}S3KEY=? S3SECRET=? BUCKET=? ${SERVICENAME} configure${CODE_E}  - Set up the S3 bucket.
-   ${CODE_S}${SERVICENAME} store < MYFILE{CODE_E}                          - Store a secret.
-   ${CODE_S}PASS=? ${SERVICENAME} store MYNAME < MYFILE{CODE_E}            - Store named secret.
+   ${CODE_S}${SERVICENAME} store < MYFILE${CODE_E}                          - Store a secret.
+   ${CODE_S}PASS=? ${SERVICENAME} store MYNAME < MYFILE${CODE_E}            - Store named secret.
    
 DESCRIPTION
    See https://github.com/j842/docker-simplesecrets
