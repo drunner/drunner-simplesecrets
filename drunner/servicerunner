@@ -68,7 +68,10 @@ function main {
          install)
             ;;
             
-         destroy)
+         obliterate)
+            ;;
+
+         uninstall)
             ;;
                      
          backupstart)
