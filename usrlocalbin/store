@@ -4,27 +4,21 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 function command_exists { command -v "$1" >/dev/null 2>&1 ; }
 function setmd5 { MD5=$(md5sum "${1}") ; MD5="${MD5%% *}" ; }
 
-if [ ! -e /config/s3 ]; then
-  echo "Store requires simplesecrets to have been configured first. Please call configure."
-  exit 1
-fi
-source /config/s3
-
 function showusage {
 cat <<EOF
 
 NAME
    store - upload to simple secrets to S3
-   
+
 SYNOPSIS
-   store < myfile 
+   store < myfile
    PASS=PASSWORD store NAME < myfile
 
 DESCRIPTION
    Uploads the encrypted file (or data) to the configured S3 bucket in /simplesecrets.
    PASSWORD is as specified, or randomly generated otherwise.
    NAME is as specified, or the MD5 of the file otherwise.
-   
+
    If NAME matches an existing file it is overwritten. This allows updating with the
    same NAME and PASSWORD, as well as updating the PASSWORD and keeping the name the
    same.
@@ -32,9 +26,9 @@ DESCRIPTION
 RETURN VALUE
    0   - success
    1   - error
-   
+
 EOF
-   exit 1  
+   exit 1
 }
 
 # putS3 is based on https://gist.github.com/chrismdp/6c6b6c825b07f680e710
@@ -55,7 +49,7 @@ function putS3
     -H "Content-Type: ${content_type}" \
     -H "Authorization: AWS ${S3KEY}:${signature}" \
     "https://${BUCKET}.s3.amazonaws.com${aws_path}"
-    
+
   if [ $? -ne 0 ]; then
      echo "Upload failed!"
      exit 1
@@ -63,7 +57,7 @@ function putS3
 }
 
 # dogpg INPUT PASSPHRASE
-function dogpg { 
+function dogpg {
    gpg --yes --batch --passphrase="$2" -c "$1" > /dev/null 2>&1 ;
    if [ ! -e "${1}.gpg" ]; then
       echo "Encryption failed."
@@ -82,7 +76,7 @@ for CMD in "${COMMANDS[@]}"; do
 done
 
 # string is null test
-if [ -z "${PASS}" ]; then 
+if [ -z "${PASS}" ]; then
    PASS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 fi
 echo "Using Passphrase: ${PASS}"
@@ -95,10 +89,10 @@ echo "MD5=${MD5}"
 NAME="${MD5}"
 if [ ! -z "$1" ]; then NAME="$1" ; fi
 echo "Using name: $NAME"
- 
+
 mkdir "/${HOME}/.gnupg" ; touch "/${HOME}/.gnupg/gpg.conf"
 
-# Encrypt. 
+# Encrypt.
 dogpg "${BASEFILE}" "$PASS"
 echo "${MD5}" > "${BASEFILE}.md5"
 
@@ -108,13 +102,13 @@ putS3 "${BASEFILE}.md5" "/simplesecrets/${NAME}.md5"
 
 # confirm file is correct.
 PASS="$PASS" /usr/local/bin/ssdownload "$BUCKET" "$NAME" > "${BASEFILE}new"
-if [ $? -ne 0 ]; then 
+if [ $? -ne 0 ]; then
     echo "Validation failed! Download/decryption failed."
     exit 1
 fi
 
 diff "${BASEFILE}new" "$BASEFILE" >/dev/null 2>&1
-if [ $? -ne 0 ]; then 
+if [ $? -ne 0 ]; then
    echo "Validation failed! Files differ."
    exit 1
 fi
@@ -126,6 +120,6 @@ echo " "
 echo "Download with:"
 echo "   PASS=${PASS} ssdownload ${BUCKET} ${NAME} > myfile"
 echo " "
-echo "( you can get ssdownload at https://raw.github.com/j842/scripts/master/ssdownload )"
+echo "( you can get ssdownload at https://drunner.s3.amazonaws.com/ssdownload )"
 echo "--------------------------------------------------------------------------------------"
 echo " "

@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+   simplesecrets:
+      image: drunner/simplesecrets
+      network_mode: "bridge"
+      environment:
+         - S3KEY
+         - S3SECRET
+         - BUCKET
+         - PASS

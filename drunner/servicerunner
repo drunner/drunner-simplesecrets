@@ -1,13 +1,13 @@
 #!/bin/bash
-                                                                                                                                                          
-#  ad88888ba                                        88                          88888888ba                                                                  
-# d8"     "8b                                       ""                          88      "8b                                                                 
-# Y8,                                                                           88      ,8P                                                                 
-# `Y8aaaaa,     ,adPPYba,  8b,dPPYba,  8b       d8  88   ,adPPYba,   ,adPPYba,  88aaaaaa8P'  88       88  8b,dPPYba,   8b,dPPYba,    ,adPPYba,  8b,dPPYba,  
-#   `"""""8b,  a8P_____88  88P'   "Y8  `8b     d8'  88  a8"     ""  a8P_____88  88""""88'    88       88  88P'   `"8a  88P'   `"8a  a8P_____88  88P'   "Y8  
-#         `8b  8PP"""""""  88           `8b   d8'   88  8b          8PP"""""""  88    `8b    88       88  88       88  88       88  8PP"""""""  88          
-# Y8a     a8P  "8b,   ,aa  88            `8b,d8'    88  "8a,   ,aa  "8b,   ,aa  88     `8b   "8a,   ,a88  88       88  88       88  "8b,   ,aa  88          
-#  "Y88888P"    `"Ybbd8"'  88              "8"      88   `"Ybbd8"'   `"Ybbd8"'  88      `8b   `"YbbdP'Y8  88       88  88       88   `"Ybbd8"'  88          
+
+#  ad88888ba                                        88                          88888888ba
+# d8"     "8b                                       ""                          88      "8b
+# Y8,                                                                           88      ,8P
+# `Y8aaaaa,     ,adPPYba,  8b,dPPYba,  8b       d8  88   ,adPPYba,   ,adPPYba,  88aaaaaa8P'  88       88  8b,dPPYba,   8b,dPPYba,    ,adPPYba,  8b,dPPYba,
+#   `"""""8b,  a8P_____88  88P'   "Y8  `8b     d8'  88  a8"     ""  a8P_____88  88""""88'    88       88  88P'   `"8a  88P'   `"8a  a8P_____88  88P'   "Y8
+#         `8b  8PP"""""""  88           `8b   d8'   88  8b          8PP"""""""  88    `8b    88       88  88       88  88       88  8PP"""""""  88
+# Y8a     a8P  "8b,   ,aa  88            `8b,d8'    88  "8a,   ,aa  "8b,   ,aa  88     `8b   "8a,   ,a88  88       88  88       88  "8b,   ,aa  88
+#  "Y88888P"    `"Ybbd8"'  88              "8"      88   `"Ybbd8"'   `"Ybbd8"'  88      `8b   `"YbbdP'Y8  88       88  88       88   `"Ybbd8"'  88
 
 
 
@@ -16,8 +16,8 @@
 
 set -o nounset
 MYDIR=$( dirname "$(readlink -f "$0")" )
-source "$MYDIR/variables.sh"
 source "$MYDIR/utils.sh"
+cd "$MYDIR"
 
 #------------------------------------------------------------------------------------
 # showhelp - give some info about the service. SERVICENAME and IMAGENAME are provided by variables.sh.
@@ -27,102 +27,71 @@ cat <<EOF >&2
 
 NAME
    ${SERVICENAME} - store low security secrets in AWS S3.
-   
+
 SYNOPSIS
    ${CODE_S}S3KEY=? S3SECRET=? BUCKET=? ${SERVICENAME} configure${CODE_E}  - Set up the S3 bucket.
    ${CODE_S}${SERVICENAME} store < MYFILE${CODE_E}                          - Store a secret.
    ${CODE_S}PASS=? ${SERVICENAME} store MYNAME < MYFILE${CODE_E}            - Store named secret.
-   
+
 DESCRIPTION
    See https://github.com/j842/docker-simplesecrets
-   
+
    Built from ${IMAGENAME}.
-   
+
 EOF
-}
-
-#------------------------------------------------------------------------------------
-# Run a command in the container. 
-
-function dockerrun {
-   docker run -i -t --name="${SERVICENAME}-${COMMAND}" -h "${HOSTNAME}" "${DOCKEROPTS[@]}" "${IMAGENAME}" "$@"
-   local RVAL=$?
-   docker rm "${SERVICENAME}-${COMMAND}" >/dev/null
-   if [ $RVAL -ne 0 ]; then die "${SERVICENAME} ${COMMAND} failed." ; fi
 }
 
 #------------------------------------------------------------------------------------
 # The main function. We can add any commands we'd like here!
 
 function main {
-   if [ "$#" -eq 0 ]; then 
+   if [ "$#" -eq 0 ]; then
       die "servicerunner must have the install argument."
    fi
 
    COMMAND="${1}" ; shift
-   
-   case "$COMMAND" in 
-         install)
-            ;;
-            
-         obliterate)
-            ;;
 
-         uninstall)
-            ;;
-                     
-         backupstart)
-            BACKUPPATH="$1"
-            ;;
-         
-         backupend)
-            BACKUPPATH="$1"
-            ;;
-
-         restore)
-            RESTOREPATH="$1"
-            ;;
-         
+   case "$COMMAND" in
          help)
             showhelp
             ;;
-         
+
          enter)
-            dockerrun /bin/bash "$@"
+            docker-compose run simplesecrets /bin/bash "$@"
             ;;
-         
+
          updatestart)
             ;;
 
          updateend)
             ;;
-         
+
          selftest)
             ;;
 
          configure)
-            if [ -z "${S3KEY}" ]; then showhelp ; die "Missing S3KEY." ; fi
-            if [ -z "${S3SECRET}" ]; then showhelp ; die "Missing S3SECRET." ; fi
-            if [ -z "${BUCKET}" ]; then showhelp ; die "Missing BUCKET." ; fi
+            [[ -v S3KEY ]] || { showhelp ; die "Missing S3KEY." ; }
+            [[ -v S3SECRET ]] || { showhelp ; die "Missing S3SECRET." ; }
+            [[ -v BUCKET ]] || { showhelp ; die "Missing BUCKET." ; }
 
-            docker run -it --name="${SERVICENAME}-${COMMAND}" -h "${HOSTNAME}" -e "S3KEY=${S3KEY}" -e "S3SECRET=${S3SECRET}" -e "BUCKET=${BUCKET}" "${DOCKEROPTS[@]}" "${IMAGENAME}" configure "$@"
-            local RVAL=$?
-            docker rm "${SERVICENAME}-${COMMAND}" >/dev/null
-            if [ $RVAL -ne 0 ]; then die "${SERVICENAME} ${COMMAND} failed." ; fi
+            save_environment "S3KEY" "${S3KEY}"
+            save_environment "S3SECRET" "${S3SECRET}"
+            save_environment "BUCKET" "${BUCKET}"
             ;;
-         
+
          store)
             if [ $# -gt 1 ]; then showhelp ; die "Expected only one argument." ; fi
-                           
-            docker run -i --name="${SERVICENAME}-${COMMAND}" -h "${HOSTNAME}" -e "PASS=${PASS:-""}" "${DOCKEROPTS[@]}" "${IMAGENAME}" store "$@"
-            local RVAL=$?
-            docker rm "${SERVICENAME}-${COMMAND}" >/dev/null
-            if [ $RVAL -ne 0 ]; then die "${SERVICENAME} ${COMMAND} failed." ; fi
+
+            docker-compose run simplesecrets /usr/local/bin/store "$@"
             ;;
-            
+
          *)
+            # For the standard hooks we don't implement we're required to produce
+            # no output and set exit code 127 (E_NOTIMPL).
+            ! isHook ${COMMAND} || exit 127
+
             showhelp
-            die "Unrecognised command ${CODE_S}${COMMAND}${CODE_E}"            
+            die "Unrecognised command ${CODE_S}${COMMAND}${CODE_E}"
             ;;
    esac
 }
