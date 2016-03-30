@@ -6,6 +6,6 @@ MAINTAINER j842
 # add in the assets.
 ADD ["./usrlocalbin","/usr/local/bin/"]
 RUN chmod a+rx -R /usr/local/bin
-USER druser
 
+USER druser
 ADD ["./drunner","/drunner"]
