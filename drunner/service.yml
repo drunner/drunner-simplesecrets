@@ -1,0 +1,36 @@
+# drunner service configuration for helloworld
+#
+---
+configuration:
+   S3KEY:
+      description: "The public key to the S3 bucket."
+      type: string
+   S3SECRET:
+      description: "The secret key to the S3 bucket."
+      type: string
+   BUCKET:
+      description: "The name of the S3 bucket."
+      type: string
+
+volumes:
+
+containers:
+   - drunner/simplesecrets
+
+commands:
+   store:
+      - docker-compose run simplesecrets /usr/local/bin/store "$@"
+
+help: |
+   NAME
+      ${SERVICENAME} - store low security secrets in AWS S3.
+
+   SYNOPSIS
+      S3KEY=? S3SECRET=? BUCKET=? ${SERVICENAME} configure  - Set up the S3 bucket.
+      ${SERVICENAME} store < MYFILE                         - Store a secret.
+      PASS=? ${SERVICENAME} store MYNAME < MYFILE           - Store named secret.
+
+   DESCRIPTION
+      See https://github.com/j842/docker-simplesecrets
+
+      Built from ${IMAGENAME}.
